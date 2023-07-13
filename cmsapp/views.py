@@ -21,7 +21,7 @@ def createpost(request):
     context = {'form': form}
     if request.method == 'POST':
         form  = PostForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             return redirect ('index')
         
@@ -41,5 +41,16 @@ def updatepost(request, pk):
     
     return render(request, 'cmsapp/create.html', context)
 
+
+
+def deletepost(request, pk):
+    form = PostForm(instance=pk)
+    form = Post.objects.get(pk=pk)
+    if request.method == 'POST':
+        form.delete()
+        return redirect('index')
+    
+    context = {'form': form}
+    return render(request, 'cmsapp/delete.html', context)
 
 
