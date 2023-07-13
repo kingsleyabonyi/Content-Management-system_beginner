@@ -17,7 +17,7 @@ def detail_list(request):
 
 
 def createpost(request):
-    form = PostForm
+    form = PostForm()
     context = {'form': form}
     if request.method == 'POST':
         form  = PostForm(request.POST)
@@ -26,6 +26,20 @@ def createpost(request):
             return redirect ('index')
         
     return render (request, 'cmsapp/create.html', context)
+
+
+def updatepost(request, pk):
+    form = PostForm()
+    form = Post.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=pk)
+        if form.is_valid():
+            form.save()
+            return redirect('detail')
+    context = {'form': form}
+        
+    
+    return render(request, 'cmsapp/create.html', context)
 
 
 
