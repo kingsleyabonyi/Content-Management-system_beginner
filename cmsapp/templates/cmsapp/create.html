@@ -1,0 +1,13 @@
+{% block content %}
+
+<h1>Hello World!</h1>
+<form action="" method="POST">
+{% csrf_token %}
+{{form.as_p}}
+
+<input type="text" value="Create Post">
+<button type="submit">Submit</button>
+
+</form>
+
+{% endblock %}
