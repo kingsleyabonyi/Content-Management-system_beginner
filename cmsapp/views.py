@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from . models import Post, Category
 from . forms import PostForm
+from django.contrib import messages
 
 # Create your views here.
 
@@ -23,7 +24,11 @@ def createpost(request):
         form  = PostForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect ('index')
+            messages.info(request, 'Article created successfully')
+            return redirect ('create')
+        else:
+            messages.error(request, 'Article not created')
+
         
     return render (request, 'cmsapp/create.html', context)
 
@@ -35,7 +40,13 @@ def updatepost(request, pk):
         form = PostForm(request.POST, instance=pk)
         if form.is_valid():
             form.save()
+            messages.info(request, 'Article Updated successfully')
+
             return redirect('detail')
+        else:
+            messages.error(request, 'Article not updated')
+
+
     context = {'form': form}
         
     
@@ -48,6 +59,8 @@ def deletepost(request, pk):
     form = Post.objects.get(pk=pk)
     if request.method == 'POST':
         form.delete()
+        messages.info(request, 'Article Updated successfully')
+
         return redirect('index')
     
     context = {'form': form}

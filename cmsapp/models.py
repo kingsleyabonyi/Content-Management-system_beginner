@@ -1,8 +1,6 @@
-
-
-
 from django.db import models
 import uuid
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Category(models.Model):
@@ -18,11 +16,11 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200, blank=True, null=True)
     image = models.ImageField(upload_to='img',)
-    body = models.TextField()
+    body = RichTextField()
     post_id = models.BigIntegerField(primary_key=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
-    slug =models.SlugField()
+    # slug =models.SlugField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
 
