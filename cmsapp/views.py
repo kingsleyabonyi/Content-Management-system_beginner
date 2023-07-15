@@ -18,11 +18,13 @@ def detail_list(request):
 
 
 def createpost(request):
+    # profile = request.user.userprofile?
     form = PostForm()
     context = {'form': form}
     if request.method == 'POST':
         form  = PostForm(request.POST)
         if form.is_valid():
+            # post.writer = profile
             form.save()
             messages.info(request, 'Article created successfully')
             return redirect ('create')
